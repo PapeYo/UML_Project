@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-11-14T10:03:12.119Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.106" etag="OTNhUQVgzkk3uttqSb5Z" version="20.5.3" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2022-11-14T10:09:53.708Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.106" etag="cAK-XXZ-80smtdz3V7a_" version="20.5.3" type="github" pages="4">
   <diagram id="kgpKYQtTHZ0yAKxKKP6v" name="Connexion au réseau + choix pseudo">
     <mxGraphModel dx="997" dy="540" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -11,9 +11,9 @@
           <mxGeometry x="240" y="40" width="120" height="300" as="geometry" />
         </mxCell>
         <mxCell id="DEolI80WyaEz7b8YXWx3-6" value="Login Manager" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=1;shadow=0;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="440" y="100" width="120" height="300" as="geometry" />
+          <mxGeometry x="440" y="80" width="120" height="300" as="geometry" />
         </mxCell>
-        <mxCell id="QzP_x0BtZWEJZMHD-hE_-2" value="display(LoginInterface)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=1;" edge="1" parent="DEolI80WyaEz7b8YXWx3-6">
+        <mxCell id="QzP_x0BtZWEJZMHD-hE_-2" value="&amp;lt;&amp;lt;create&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;endArrow=block;rounded=1;entryX=-0.01;entryY=0.069;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="DEolI80WyaEz7b8YXWx3-6" target="QzP_x0BtZWEJZMHD-hE_-1">
           <mxGeometry width="80" relative="1" as="geometry">
             <mxPoint x="60" y="60" as="sourcePoint" />
             <mxPoint x="259.5" y="60" as="targetPoint" />
@@ -23,9 +23,9 @@
           <mxGeometry x="840" y="40" width="120" height="300" as="geometry" />
         </mxCell>
         <mxCell id="QzP_x0BtZWEJZMHD-hE_-1" value="Login Interface" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=1;shadow=0;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="640" y="40" width="120" height="300" as="geometry" />
+          <mxGeometry x="640" y="120" width="120" height="300" as="geometry" />
         </mxCell>
-        <mxCell id="eCnRZ242I6gTlTvKb6aR-2" value="startThread(LoginManager)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=1;entryX=-0.023;entryY=0.067;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="DEolI80WyaEz7b8YXWx3-4" target="DEolI80WyaEz7b8YXWx3-6">
+        <mxCell id="eCnRZ242I6gTlTvKb6aR-2" value="&amp;lt;&amp;lt;create&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;endArrow=block;rounded=1;entryX=-0.023;entryY=0.067;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="DEolI80WyaEz7b8YXWx3-4" target="DEolI80WyaEz7b8YXWx3-6">
           <mxGeometry width="80" relative="1" as="geometry">
             <mxPoint x="300" y="120" as="sourcePoint" />
             <mxPoint x="440" y="120" as="targetPoint" />
