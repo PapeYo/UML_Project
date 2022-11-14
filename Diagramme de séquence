@@ -1,1 +1,79 @@
-<mxfile host="app.diagrams.net" modified="2022-11-14T09:13:38.352Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.106" etag="-aFWs-LEzx3URS0KzkAh" version="20.5.3" type="github"><diagram id="kgpKYQtTHZ0yAKxKKP6v" name="Page-1">7ZjLcpswFIafhmU6RhgbL2Pn0kU6yTSdSbOU4QTUCMQIEeM+fSUQYC5OcGrctNOVpV8XxP/pnMPYsFZhds1xHHxhHlADTbzMsC4MhEyELPmjlK1WTAcVis+Jp7VauCc/QYsTrabEg6QxUTBGBYmbosuiCFzR0DDnbNOc9sRo86kx9qEj3LuYdtUH4omgUB17UuufgfhB+WRzokdCXE7WQhJgj212JOvSsFacMVG0wmwFVLlX+lKsu9ozWh2MQySGLLCidHmV8YW7vZnE0e3DN4Svz/QuL5im+oUN6/x2/UNZWZxabEsr5AvEqpmG9IY8ASWR7C1j4CQEAVyOUC3f1dpSghFYamrczPuU4jgh63zbiVQ4uClPyAt8haTgn6ssjTzwdK8yL+8Izp4rHGpT/RbABWR77TEr0+V1BSYPyLdySnVXNSd9Ux3d3dTUK7bBDnGrFLG+aX61dQ1DNjSPA9igLps2kpiRSOTPtZeGfdHCwbgImM8iTHeBHN/Y/Tdrr9tTu2H2vM/srtfmYiyvrY7XHkliLNyg47kyg8gEcU6JH0lpzYRgYe4e5uJc5RzlvdxKahB5pbKmzH0up+lE5wwlAF4nTQ3xXyZLzH14bR7q58SBYiFjsplQe2zXS+/UTaz5npn9gMsdEpZyF/SiFrvqFO/HOf2HQ8du5qkqb70RO85YoWP/LyFZqxR8mBIy+6vjwD6khPSa3VNCZmN5Pe94zUGkPBpeQHaKBYtBDi09nAS5z2YxvFM2ICPiuzZdtR9V+9PCfndFKVLy25dpWEUZFDe/WWTQvHkFkDVrblEcdbQq4xzho6HnA0G6xrcVWtV5PCTSDgeLBoKd/SmwnaAd+fNh0QEr0dE1lniOAtY8EdihETs9Gdhps0KiduUbGWxZEU6dpM2TJenph4vlNnJ7fqQkLbv1vyfF9PpPKOvyFw==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2022-11-14T09:44:48.124Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 OPR/91.0.4516.106" etag="Zsfunnfv8tLcZVDwDbnM" version="20.5.3" type="github" pages="4">
+  <diagram id="kgpKYQtTHZ0yAKxKKP6v" name="Connexion au réseau + choix pseudo">
+    <mxGraphModel dx="997" dy="540" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DEolI80WyaEz7b8YXWx3-2" value="Network Manager" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=1;shadow=0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="DEolI80WyaEz7b8YXWx3-4" value="Thread Manager" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=1;shadow=0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="eCnRZ242I6gTlTvKb6aR-2" value="createLoginManager()" style="html=1;verticalAlign=bottom;endArrow=block;rounded=1;" edge="1" parent="DEolI80WyaEz7b8YXWx3-4" target="DEolI80WyaEz7b8YXWx3-6">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="60" y="80" as="sourcePoint" />
+            <mxPoint x="140" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DEolI80WyaEz7b8YXWx3-6" value="Login Manager" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=1;shadow=0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="eCnRZ242I6gTlTvKb6aR-1" value="Database" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=1;shadow=0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="v_m-0Hjup7f7Xp_nJx0i" name="Conversation">
+    <mxGraphModel dx="1173" dy="635" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p28qfc5AHqMLb6rtPjMR-1" value="Conv Manager" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=1;shadow=0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="po2gzmvrqSzQkWFBsL7G-1" value="Database Manager" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=1;shadow=0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="po2gzmvrqSzQkWFBsL7G-2" value="Database" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=1;shadow=0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="po2gzmvrqSzQkWFBsL7G-3" value="Conversation" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=1;shadow=0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="5hkIFRQpsMvvZANcayd9-1" value="Network Manager" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=1;shadow=0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="OLGtHUBMq96QbzlYEZYW" name="Changement de pseudo">
+    <mxGraphModel dx="997" dy="540" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="LjCL79uQz_Azb0jYTmws-1" value="Login Manager" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="71Zv20UPzK4n2-JJg_lF-1" value="Thread&amp;nbsp;Manager" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="VPbmU7zEpJQNiw-xI_kJ-1" value="User" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="FUjhotuQ-JpAuM3btm2s" name="Déconnexion">
+    <mxGraphModel dx="997" dy="540" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="jRoQXfN3mXy_T6wkXmOA-1" value="Logout Manager" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="120" height="300" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
