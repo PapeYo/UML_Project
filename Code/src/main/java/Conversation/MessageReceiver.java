@@ -18,6 +18,15 @@ public class MessageReceiver {
 	static String message;
 	static BufferedReader in;
 	static Socket link = null;
+	
+	public static void connectPort(int portnumber) {
+		try {
+			servSocket = new ServerSocket(portnumber);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String args[]) {
 		ippartner = "166.166.12.8";
@@ -26,7 +35,6 @@ public class MessageReceiver {
 			database_management.db_conv_manager.connect();
 			ipreceiver = (InetAddress.getLocalHost()).toString();
 			ipreceiver = ipreceiver.replaceAll(".*/", "");
-			servSocket = new ServerSocket(6667);
 			link = servSocket.accept();
 			in = new BufferedReader(new InputStreamReader(link.getInputStream()));
 			message = in.readLine();
