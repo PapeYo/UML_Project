@@ -16,7 +16,7 @@ public class db_conv_manager extends db_manager {
 				+ " VALUES(?,?,?,?,?)";
 		try {
 			if (connection == null) {
-				connection = db_conv_manager.connect();
+				connection = connect();
 			}			
 			PreparedStatement pstmt = connection.prepareStatement(sql);
 			pstmt.setString(1, ippartner);
@@ -34,16 +34,17 @@ public class db_conv_manager extends db_manager {
 		String sql = "SELECT * FROM conversation";
 		try {
 			if (connection == null) {
-				connection = db_conv_manager.connect();
+				connection = connect();
 			}
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
+			System.out.println("time\t\t\t\tippartner\t\tipsender\t\tipreceiver\t\tmessage");
 			while (rs.next()) {
-				System.out.println(	rs.getString("ippartner") + "\t" +
-									rs.getString("ipsender") + "\t" +
-									rs.getString("ipreceiver") + "\t" +
-									rs.getString("message") + "\t" +
-									rs.getTimestamp("time"));
+				System.out.println(	rs.getTimestamp("time") + "\t\t" +
+									rs.getString("ippartner") + "\t\t" +
+									rs.getString("ipsender") + "\t\t" +
+									rs.getString("ipreceiver") + "\t\t" +
+									rs.getString("message"));
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

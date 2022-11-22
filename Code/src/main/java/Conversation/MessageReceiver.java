@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.sql.Timestamp;
+import database_management.db_conv_manager;
 
 public class MessageReceiver {
 
@@ -23,27 +25,48 @@ public class MessageReceiver {
 		try {
 			servSocket = new ServerSocket(portnumber);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
+	}
+	
+	public static String getIPlocalhost() throws UnknownHostException {
+		return (InetAddress.getLocalHost()).toString().replaceAll(".*/", "");
+	}
+	
+	public static void getMessageInfo() throws IOException {
+		message = in.readLine();
+		ippartner = in.readLine();
+		ipsender = ippartner;
+		timestamp = new Timestamp(System.currentTimeMillis());
 	}
 
 	public static void main(String args[]) {
-		ippartner = "166.166.12.8";
-		ipsender = "166.166.12.8";
 		try {
-			database_management.db_conv_manager.connect();
-			ipreceiver = (InetAddress.getLocalHost()).toString();
-			ipreceiver = ipreceiver.replaceAll(".*/", "");
+			// connection to database
+			db_conv_manager.connect();
+			
+			// listens on port number 6667
+			connectPort(6667);
+			System.out.println("Connect to port number 6667");
+			
+			// get IP receiver = Localhost IP
+			ipreceiver = getIPlocalhost();			
+			
 			link = servSocket.accept();
+			
+			// create message reader
 			in = new BufferedReader(new InputStreamReader(link.getInputStream()));
-			message = in.readLine();
-			timestamp = new Timestamp(System.currentTimeMillis());
+			
+			// read the conversation communication
+			getMessageInfo();
 			System.out.println("Message recu = " + message);
-			database_management.db_conv_manager.insertMessage(ippartner, ipsender, ipreceiver, message, timestamp);
-			// afficher l'historique des messages
-			database_management.db_conv_manager.selectALLmessages();
-			database_management.db_conv_manager.disconnect();
+			
+			// add message to database
+			db_conv_manager.insertMessage(ippartner, ipsender, ipreceiver, message, timestamp);
+			
+			// display message history
+			db_conv_manager.selectALLmessages();
+			db_conv_manager.disconnect();
 		} catch (IOException e) {
 			System.out.println(e);
 		}

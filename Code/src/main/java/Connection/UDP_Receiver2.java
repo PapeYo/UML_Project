@@ -9,21 +9,24 @@ import Setup.Constants;
 
 public class UDP_Receiver2 {
 	public static void main(String args[]) throws IOException {
-		String pseudo = "moi mais le vrai";
+		String mesg = "Pseudo well received";
 		/* setup UDP */
 		DatagramSocket dgramSocket = new DatagramSocket(Constants.BROADCAST_PORT);
-		System.out.println("en vrai ça va");
+		System.out.println("dgram socket created");
 		byte[] buffer = new byte[256];
 		DatagramPacket inPacket = new DatagramPacket(buffer,buffer.length);
+		System.out.println("inpacket created");
 		dgramSocket.receive(inPacket);
+		System.out.println("inpacket received");
+		// recreate pseudo string
 		InetAddress senderAddress = inPacket.getAddress();
 		int senderPort = inPacket.getPort();
-		System.out.println("en vrai ça va");
 		String msg = new String(inPacket.getData(),0,inPacket.getLength());
-		System.out.println(msg);
-		DatagramPacket outPacket = new DatagramPacket(pseudo.getBytes(), pseudo.length(),
+		System.out.println("Pseudo = " + msg);
+		// send "pseudo well received" message
+		DatagramPacket outPacket = new DatagramPacket(mesg.getBytes(), mesg.length(),
 				senderAddress, senderPort);
 		dgramSocket.send(outPacket);
 		dgramSocket.close();
-		}
+	}
 }
