@@ -9,7 +9,6 @@ import Setup.Constants;
 
 public class UDP_Receiver2 {
 	public static void main(String args[]) throws IOException {
-		String mesg = "Pseudo well received";
 		/* setup UDP */
 		DatagramSocket dgramSocket = new DatagramSocket(Constants.BROADCAST_PORT);
 		System.out.println("dgram socket created");
@@ -24,6 +23,7 @@ public class UDP_Receiver2 {
 		String msg = new String(inPacket.getData(),0,inPacket.getLength());
 		System.out.println("Pseudo = " + msg);
 		// send "pseudo well received" message
+		String mesg = "Pseudo well received";
 		DatagramPacket outPacket = new DatagramPacket(mesg.getBytes(), mesg.length(),
 				senderAddress, senderPort);
 		dgramSocket.send(outPacket);

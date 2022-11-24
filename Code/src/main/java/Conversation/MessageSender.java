@@ -8,12 +8,15 @@ import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.time.LocalTime;
 
+import database_management.db_conv_manager;
+
 public class MessageSender {
 	
 	final static String serverHost = "localhost";
 	static Socket link;
 	static PrintWriter out = null;
 	
+	// 
 	static String message;
 	static String ippartner;
 	static String ipsender;
@@ -22,24 +25,32 @@ public class MessageSender {
 	
 	public static void getMessageInfo() throws IOException {
 		// message = read from JFieldText
-		message = "il est " + LocalTime.now();
+		ippartner = link.getInetAddress().getHostAddress();
+		ipsender = getIPlocalhost();
 		ipreceiver = ippartner;
+		message = "il est " + LocalTime.now();
 		timestamp = new Timestamp(System.currentTimeMillis());
 	}
 	
 	public static String getIPlocalhost() throws UnknownHostException {
-		return (InetAddress.getLocalHost()).toString().replaceAll(".*/", "");
+		return InetAddress.getLocalHost().getHostAddress();
+	}
+	
+	public static void addToDb() {
+		// add message to database
+		db_conv_manager.insertMessage(ippartner, ipsender, ipreceiver, "Sender : " + message, timestamp);
+		// display message history
+		db_conv_manager.selectALLmessages();
+		db_conv_manager.disconnect();
 	}
 	
 	public static void main(String args[]) throws UnknownHostException {		
 		try {
 			link = new Socket(serverHost, 6667);
 			out = new PrintWriter(link.getOutputStream(),true);
-			ipsender = getIPlocalhost();
 			getMessageInfo();
+			addToDb();
 			out.println(message);
-			String ipsender = (InetAddress.getLocalHost()).toString().replaceAll(".*/", "");
-			out.println(ipsender);
 			out.close();
 			link.close();
 		} catch (IOException e) {

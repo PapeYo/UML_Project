@@ -30,14 +30,22 @@ public class MessageReceiver {
 	}
 	
 	public static String getIPlocalhost() throws UnknownHostException {
-		return (InetAddress.getLocalHost()).toString().replaceAll(".*/", "");
+		return InetAddress.getLocalHost().getHostAddress();
 	}
 	
 	public static void getMessageInfo() throws IOException {
 		message = in.readLine();
-		ippartner = in.readLine();
+		ippartner = link.getInetAddress().getHostAddress();
 		ipsender = ippartner;
 		timestamp = new Timestamp(System.currentTimeMillis());
+	}
+
+	public static void addToDb() {
+		// add message to database
+		db_conv_manager.insertMessage(ippartner, ipsender, ipreceiver, "Receiver : " + message, timestamp);
+		// display message history
+		db_conv_manager.selectALLmessages();
+		db_conv_manager.disconnect();
 	}
 
 	public static void main(String args[]) {
@@ -47,10 +55,10 @@ public class MessageReceiver {
 			
 			// listens on port number 6667
 			connectPort(6667);
-			System.out.println("Connect to port number 6667");
+			System.out.println("Connected to port number 6667");
 			
 			// get IP receiver = Localhost IP
-			ipreceiver = getIPlocalhost();			
+			ipreceiver = getIPlocalhost();
 			
 			link = servSocket.accept();
 			
@@ -61,12 +69,8 @@ public class MessageReceiver {
 			getMessageInfo();
 			System.out.println("Message recu = " + message);
 			
-			// add message to database
-			db_conv_manager.insertMessage(ippartner, ipsender, ipreceiver, message, timestamp);
+			addToDb();
 			
-			// display message history
-			db_conv_manager.selectALLmessages();
-			db_conv_manager.disconnect();
 		} catch (IOException e) {
 			System.out.println(e);
 		}

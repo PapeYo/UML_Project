@@ -11,21 +11,25 @@ import database_management.db_users_manager;
 
 public class UDP_Sender {
 	public static void main(String args[]) throws IOException {
-		String pseudo="Yohan";
+		String pseudo="PapeYo";
 		/* setup UDP */
+		
 		// get localhost broadcast address
 		InetAddress bc_addr;
 		NetworkInterface nif = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
 		bc_addr = nif.getInterfaceAddresses().get(0).getBroadcast();
 		System.out.println("BroadCast address : " + bc_addr);
+		
 		// create pseudo message
 		DatagramSocket dgramSocket = new DatagramSocket();
 		System.out.println("datagram socket created");
 		DatagramPacket outPacket = new DatagramPacket(pseudo.getBytes(),pseudo.length(),bc_addr, Constants.BROADCAST_PORT);
 		System.out.println("datagram outpacket created");
+		
 		// send pseudo message
 		dgramSocket.send(outPacket);
 		System.out.println("outpacket sent");
+		
 		// receive "pseudo received" confirmation
 		byte[] buffer = new byte[256];
 		DatagramPacket inPacket = new DatagramPacket(buffer,buffer.length);
