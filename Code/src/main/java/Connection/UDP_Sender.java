@@ -46,4 +46,6 @@ public class UDP_Sender {
 	}
 }
 
+
+// modif obtention localhostIP
 // systeme de thread pour la réception (sur le sender) + dictionnaire (@IP,pseudo) + différencier déco, co, answer en émission UDP (1° string=0,1,2 ?) + DB (users)

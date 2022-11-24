@@ -30,3 +30,5 @@ public class UDP_Receiver1 {
 		dgramSocket.close();
 	}
 }
+
+// ajout dans bdd si unique

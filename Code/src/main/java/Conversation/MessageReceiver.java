@@ -1,3 +1,4 @@
+
 package Conversation;
 
 import java.io.BufferedReader;
@@ -35,6 +36,7 @@ public class MessageReceiver {
 	
 	public static void getMessageInfo() throws IOException {
 		message = in.readLine();
+		ipreceiver = getIPlocalhost();
 		ippartner = link.getInetAddress().getHostAddress();
 		ipsender = ippartner;
 		timestamp = new Timestamp(System.currentTimeMillis());
@@ -53,15 +55,12 @@ public class MessageReceiver {
 			// connection to database
 			db_conv_manager.connect();
 			
-			// listens on port number 6667
-			connectPort(6667);
-			System.out.println("Connected to port number 6667");
-			
-			// get IP receiver = Localhost IP
-			ipreceiver = getIPlocalhost();
-			
+			// listens on port number 7777
+			connectPort(7777);
+			System.out.println("Connected to port number 7777");
+			System.out.println("Waiting to accept");
 			link = servSocket.accept();
-			
+			System.out.println("Accepted");
 			// create message reader
 			in = new BufferedReader(new InputStreamReader(link.getInputStream()));
 			
