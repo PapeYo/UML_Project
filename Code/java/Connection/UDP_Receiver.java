@@ -1,0 +1,38 @@
+package Connection;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+
+import Setup.Constants;
+import database_management.db_users_manager;
+
+public class UDP_Receiver extends Thread {
+
+	static DatagramSocket dgramSocket;
+	static DatagramPacket inPacket;
+	static InetAddress senderAddress;
+	static int senderPort;
+	static String pseudo;
+
+	private static void createUDP_Receiver(int portNumber) throws SocketException {
+		dgramSocket = new DatagramSocket(portNumber);
+		System.out.println("dgram socket created");
+	}
+
+	private static void createInPacket() {
+		byte[] buffer = new byte[256];
+		inPacket = new DatagramPacket(buffer,buffer.length);
+		System.out.println("inpacket created");
+	}
+
+	private static void receivePacket() throws IOException {
+		while(true) {
+			dgramSocket.receive(inPacket);
+			System.out.println("inpacket received");
+			UDP.analyzePacket(inPacket);
+		}
+	}
+}
