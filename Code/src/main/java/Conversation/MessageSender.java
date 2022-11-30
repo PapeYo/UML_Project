@@ -46,7 +46,7 @@ public class MessageSender {
 	
 	public static void main(String args[]) throws UnknownHostException {		
 		try {
-			link = new Socket("192.168.1.95", 7777);
+			link = new Socket("10.32.47.251", 7777);
 			System.out.println(link);
 			out = new PrintWriter(link.getOutputStream(),true);
 			getMessageInfo();

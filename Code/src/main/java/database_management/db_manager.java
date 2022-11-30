@@ -6,14 +6,13 @@ import java.sql.SQLException;
 
 public class db_manager {
 	
-	private static String url;
+	private static String db_url = "jdbc:sqlite:Database_folder/chat_app_db.db";
 	private static Connection connection;
 	
 	public static Connection connect() {
-		url = "jdbc:sqlite:C:/Chat_App/chat_app_db.db";
 		try {
-			connection = DriverManager.getConnection(url);
-			System.out.println("Connection is successful to the database " + url);
+			connection = DriverManager.getConnection(db_url);
+			System.out.println("Connection is successful to the database " + db_url);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

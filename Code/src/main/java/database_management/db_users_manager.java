@@ -74,4 +74,23 @@ public class db_users_manager extends db_manager {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	public static String selectUser(String localhostIP) throws SQLException {
+		String sql = "SELECT pseudo FROM users WHERE ipaddress = ?";
+		PreparedStatement pstmt;
+		if (connection == null) connection = connect();
+		pstmt = connection.prepareStatement(sql);
+		pstmt.setString(1, localhostIP);
+		ResultSet rs = pstmt.executeQuery();
+		return rs.getString("pseudo");
+	}
+
+	public static void removeUser(String ipuser) throws SQLException {
+		String sql = "DELETE FROM users WHERE ipaddress = ?";
+		PreparedStatement pstmt;
+		if (connection == null) connection = connect();
+		pstmt = connection.prepareStatement(sql);
+		pstmt.setString(1, ipuser);
+		pstmt.executeUpdate();
+	}
 }
