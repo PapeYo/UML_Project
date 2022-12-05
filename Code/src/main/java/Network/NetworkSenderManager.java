@@ -2,10 +2,10 @@ package Network;
 
 import java.net.SocketException;
 
-import udp.*;
+import udp.UDP_Sender;
 
-public class NetworkReceiverManager {
+public class NetworkSenderManager {
 	public static void main(String arg[]) throws SocketException {
-		UDP_Receiver udp_receiver = new UDP_Receiver();
+		UDP_Sender udp_sender = new UDP_Sender("PapéYo");
 	}
 }

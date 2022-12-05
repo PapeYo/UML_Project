@@ -17,7 +17,7 @@ public class UDP extends Thread{
     static UDP_Sender udp_Sender = new UDP_Sender();
 
     public static void main(String arg[]) throws SocketException, UnknownHostException {
-		//Start thread udp_receiver & udp_sender (� REVOIR ?)
+		//Start thread udp_receiver & udp_sender (A REVOIR ?)
         udp_Receiver.start();
         udp_Receiver.createUDP_Receiver(Constants.UDP_PORT); //constante inexistante ??
 		udp_Sender.start();
