@@ -2,7 +2,7 @@ package Network;
 
 import java.net.SocketException;
 
-import udp.*;
+import Connection.*;
 
 public class NetworkReceiverManager {
 	public static void main(String arg[]) throws SocketException {

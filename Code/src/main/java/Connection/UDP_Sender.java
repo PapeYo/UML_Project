@@ -4,38 +4,57 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.net.UnknownHostException;
-
+import java.util.Enumeration;
 import Setup.Constants;
-// import database_management.db_users_manager;
+import database_management.db_users_manager;
 
 public class UDP_Sender extends Thread{
 	
-	private static InetAddress bc_addr;
-	private NetworkInterface nif;
-	private static DatagramSocket dgramSocket;
+	private String pseudo;
+	private InetAddress bc_addr;
+	private String localIP;
+	private DatagramSocket dgramSocket;
+	
+	public UDP_Sender(String pseudo) throws SocketException {
+		this.pseudo = pseudo;
+		start();
+	}
+	
+	public void get_BcAddr() throws SocketException {
+		Enumeration<NetworkInterface> networkInterfaceEnumeration = NetworkInterface.getNetworkInterfaces();
+		while(networkInterfaceEnumeration.hasMoreElements()) {
+			for(InterfaceAddress interfaceAddress : networkInterfaceEnumeration.nextElement().getInterfaceAddresses()) {
+				if(interfaceAddress.getAddress().isSiteLocalAddress()) {
+					localIP = interfaceAddress.getAddress().getHostAddress();
+					bc_addr = interfaceAddress.getBroadcast();
+					System.out.println("Local IP : " + localIP);
+					System.out.println("Broadcast address : " + bc_addr);
+				}
+			}
+		}
+	}
 	
 	/* setup UDP with constructor */
-	public void create_UDP_Sender() throws SocketException, UnknownHostException {
-		nif = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
-		bc_addr = nif.getInterfaceAddresses().get(0).getBroadcast();
-		System.out.println("BroadCast address : " + bc_addr);
+	public void create_UDP_Sender() throws SocketException {
 		dgramSocket = new DatagramSocket();
 		System.out.println("datagram socket created");
 	}
 	 
-	public static void broadcast_pseudo(String pseudo) throws IOException {
+	public void broadcast_pseudo() throws IOException {
 		// create pseudo message
-		DatagramPacket outPacket = new DatagramPacket(pseudo.getBytes(),pseudo.length(),bc_addr, Constants.BROADCAST_PORT);
+		byte[] buf = pseudo.getBytes();
+		DatagramPacket outPacket = new DatagramPacket(buf,buf.length,bc_addr, Constants.BROADCAST_PORT);
 		System.out.println("datagram outpacket created");
 		// send pseudo message
 		dgramSocket.send(outPacket);
-		System.out.println("outpacket sent");
+		System.out.println("Pseudo packet sent");
+		db_users_manager.updateUserTable(localIP, pseudo);
 	}
 	
-	public static void disconnect() throws IOException {
+	public void disconnect() throws IOException {
 		// create disconnect message
 		DatagramPacket outPacket = new DatagramPacket(null,-1,bc_addr, Constants.BROADCAST_PORT);
 		System.out.println("Disconnection datagram outpacket created");
@@ -46,14 +65,24 @@ public class UDP_Sender extends Thread{
 		dgramSocket.close();
 	}
 	
-	public static void main(String args[]) throws IOException {
-		// receive "pseudo received" confirmation
+	public void get_answer() throws IOException {
 		byte[] buffer = new byte[256];
 		DatagramPacket inPacket = new DatagramPacket(buffer,buffer.length);
 		System.out.println("waiting for answer");
 		dgramSocket.receive(inPacket);
 		String mesg = new String(inPacket.getData(),0,inPacket.getLength());
 		System.out.println(mesg);
+	}
+	
+	public void run() {
+		try {
+			get_BcAddr();
+			create_UDP_Sender();
+			broadcast_pseudo();
+			get_answer();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }
 
