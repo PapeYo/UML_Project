@@ -20,18 +20,17 @@ public class UDP_Sender extends Thread{
 	
 	public UDP_Sender(String pseudo) throws SocketException {
 		this.pseudo = pseudo;
-		get_BcAddr();
 		start();
 	}
 	
 	public void get_BcAddr() throws SocketException {
 		Enumeration<NetworkInterface> networkInterfaceEnumeration = NetworkInterface.getNetworkInterfaces();
-		while( networkInterfaceEnumeration.hasMoreElements()){
+		while(networkInterfaceEnumeration.hasMoreElements()){
 			for (InterfaceAddress interfaceAddress : networkInterfaceEnumeration.nextElement().getInterfaceAddresses()) {
 				if (interfaceAddress.getAddress().isSiteLocalAddress()) {
 					localIP = interfaceAddress.getAddress().getHostAddress();
 					bc_addr = interfaceAddress.getBroadcast();
-					System.out.println("IP : " + localIP);
+					System.out.println("Local IP : " + localIP);
 					System.out.println("Broadcast address : " + bc_addr);
 				}
 			}
@@ -51,15 +50,16 @@ public class UDP_Sender extends Thread{
 		System.out.println("datagram outpacket created");
 		// send pseudo message
 		dgramSocket.send(outPacket);
-		System.out.println("outpacket sent");
+		System.out.println("Pseudo packet sent");
 		db_users_manager.updateUserTable(localIP, pseudo);
 	}
 	
-	private void changePseudo(String pseudo) throws IOException {
-    	broadcast_pseudo();
-    	String localhostIP = InetAddress.getLocalHost().getHostAddress();
-		db_users_manager.updateUserTable(localhostIP, pseudo);
-    }
+	/*
+	 * private void changePseudo(String pseudo) throws IOException {
+	 * broadcast_pseudo(); String localhostIP =
+	 * InetAddress.getLocalHost().getHostAddress();
+	 * db_users_manager.updateUserTable(localhostIP, pseudo); }
+	 */
 	
 	public void disconnect() throws IOException {
 		// create disconnect message
@@ -83,6 +83,7 @@ public class UDP_Sender extends Thread{
 
 	public void run() {
 		try {
+			get_BcAddr();
 			create_UDP_Sender();
 			broadcast_pseudo();
 			get_answer();

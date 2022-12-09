@@ -31,23 +31,33 @@ public class UDP_Receiver extends Thread {
 	}
 
 	// receive the username packet
-	private void receivePacket() throws IOException {
+	private void receivePacket() throws IOException, SQLException {
 		byte[] buffer = new byte[256];
 		inPacket = new DatagramPacket(buffer,buffer.length);
 		System.out.println("inpacket created");
 		dgramSocket.receive(inPacket);
 		System.out.println("inpacket received");
 		System.out.println("Sender address : " + inPacket.getAddress());
-		// analyzePacket(inPacket);
+		analyzePacket(inPacket);
+	}
+	
+	private void sendAnswer(InetAddress senderAddress) throws IOException {
+		byte[] buffer = new byte[256];
+		DatagramPacket answerPacket = new DatagramPacket(buffer,buffer.length,senderAddress, Constants.BROADCAST_PORT);
+		System.out.println("datagram outpacket created");
+		// send pseudo message
+		dgramSocket.send(answerPacket);
+		System.out.println("Answer packet sent");
 	}
 
 	// analyze the username packet : someone's connection or disconnection
-	public void analyzePacket(DatagramPacket inPacket) throws SQLException {
+	public void analyzePacket(DatagramPacket inPacket) throws SQLException, IOException {
 		senderAddress = inPacket.getAddress();
 		if (inPacket.getLength() > 0){
 			//int senderPort = inPacket.getPort();
 			String pseudo = new String(inPacket.getData(),0,inPacket.getLength());
 			db_users_manager.updateUserTable(senderAddress.toString().replaceAll("/", ""), pseudo);
+			sendAnswer(senderAddress);
 		}
 		else if (inPacket.getLength()==-1){
 			db_users_manager.removeUser(senderAddress.toString().replaceAll("/", "")); //need a removeUser class
@@ -56,9 +66,11 @@ public class UDP_Receiver extends Thread {
 
 	public void run() {
 		try {
-			createUDP_Receiver(Constants.UDP_PORT);
+			createUDP_Receiver(Constants.BROADCAST_PORT);
 			receivePacket();
 		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 	}
