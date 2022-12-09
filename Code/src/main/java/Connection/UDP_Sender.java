@@ -65,25 +65,14 @@ public class UDP_Sender extends Thread{
 		dgramSocket.close();
 	}
 	
-	public void get_answer() throws IOException {
-		byte[] buffer = new byte[256];
-		DatagramPacket inPacket = new DatagramPacket(buffer,buffer.length);
-		System.out.println("waiting for answer");
-		dgramSocket.receive(inPacket);
-		String mesg = new String(inPacket.getData(),0,inPacket.getLength());
-		System.out.println(mesg);
-	}
-	
 	public void run() {
 		try {
 			get_BcAddr();
 			create_UDP_Sender();
 			broadcast_pseudo();
-			get_answer();
+			// receiveAnswer_RtoS();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 	}
 }
-
-// systeme de thread pour la réception (sur le sender) + dictionnaire (@IP,pseudo) + différencier déco, co, answer en émission UDP (1° string=0,1,2 ?) + DB (users)
