@@ -54,6 +54,15 @@ public class UDP_Sender extends Thread{
 		db_users_manager.updateUserTable(localIP, pseudo);
 	}
 	
+	public static void sendAnswer_RtoS(InetAddress senderAddress) throws IOException {
+		DatagramSocket dgramSocket = new DatagramSocket();
+		byte[] buffer = new byte[256];
+		DatagramPacket answerPacket = new DatagramPacket(buffer, buffer.length, senderAddress, Constants.BROADCAST_PORT);
+		dgramSocket.send(answerPacket);
+		System.out.println("Answer packet sent");
+		dgramSocket.close();
+	}
+	
 	public void disconnect() throws IOException {
 		// create disconnect message
 		DatagramPacket outPacket = new DatagramPacket(null,-1,bc_addr, Constants.BROADCAST_PORT);
@@ -65,25 +74,14 @@ public class UDP_Sender extends Thread{
 		dgramSocket.close();
 	}
 	
-	public void get_answer() throws IOException {
-		byte[] buffer = new byte[256];
-		DatagramPacket inPacket = new DatagramPacket(buffer,buffer.length);
-		System.out.println("waiting for answer");
-		dgramSocket.receive(inPacket);
-		String mesg = new String(inPacket.getData(),0,inPacket.getLength());
-		System.out.println(mesg);
-	}
-	
 	public void run() {
 		try {
 			get_BcAddr();
 			create_UDP_Sender();
 			broadcast_pseudo();
-			get_answer();
+			// receiveAnswer_RtoS();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 	}
 }
-
-// systeme de thread pour la réception (sur le sender) + dictionnaire (@IP,pseudo) + différencier déco, co, answer en émission UDP (1° string=0,1,2 ?) + DB (users)
