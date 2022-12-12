@@ -39,13 +39,14 @@ public class UDP_Sender extends Thread{
 	
 	/* setup UDP with constructor */
 	public void create_UDP_Sender() throws SocketException {
-		dgramSocket = new DatagramSocket();
+		dgramSocket = new DatagramSocket(Constants.BROADCAST_PORT);
 		System.out.println("datagram socket created");
 	}
 	 
 	public void broadcast_pseudo() throws IOException {
 		// create pseudo message
-		byte[] buf = pseudo.getBytes();
+		String mesg = "00/" + pseudo;
+		byte[] buf = mesg.getBytes();
 		DatagramPacket outPacket = new DatagramPacket(buf,buf.length,bc_addr, Constants.BROADCAST_PORT);
 		System.out.println("datagram outpacket created");
 		// send pseudo message
@@ -55,8 +56,9 @@ public class UDP_Sender extends Thread{
 	}
 	
 	public static void sendAnswer_RtoS(InetAddress senderAddress) throws IOException {
-		DatagramSocket dgramSocket = new DatagramSocket();
-		byte[] buffer = new byte[256];
+		DatagramSocket dgramSocket = new DatagramSocket(Constants.BROADCAST_PORT);
+		String mesg = "01/";
+		byte[] buffer = mesg.getBytes();
 		DatagramPacket answerPacket = new DatagramPacket(buffer, buffer.length, senderAddress, Constants.BROADCAST_PORT);
 		dgramSocket.send(answerPacket);
 		System.out.println("Answer packet sent");
@@ -65,7 +67,9 @@ public class UDP_Sender extends Thread{
 	
 	public void disconnect() throws IOException {
 		// create disconnect message
-		DatagramPacket outPacket = new DatagramPacket(null,-1,bc_addr, Constants.BROADCAST_PORT);
+		String mesg = "10/";
+		byte[] buffer = mesg.getBytes();
+		DatagramPacket outPacket = new DatagramPacket(buffer,buffer.length,bc_addr, Constants.BROADCAST_PORT);
 		System.out.println("Disconnection datagram outpacket created");
 		// send disconnect message
 		dgramSocket.send(outPacket);

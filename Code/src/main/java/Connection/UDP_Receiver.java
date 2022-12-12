@@ -46,14 +46,19 @@ public class UDP_Receiver extends Thread {
 
 	public void analyzePacket(DatagramPacket inPacket) throws SQLException, IOException {
 		senderAddress = inPacket.getAddress();
-		if (inPacket.getLength() > 0){
-			String pseudo = new String(inPacket.getData(),0,inPacket.getLength());
+		String mesg = new String(inPacket.getData(),0,inPacket.getLength());
+		System.out.println(mesg);
+		if (mesg.startsWith("00/")){
+			String pseudo = mesg.replaceAll("00/", "");
+			System.out.println("Pseudo : " + pseudo + ".");
+			System.out.println(pseudo.length());
 			db_users_manager.updateUserTable(senderAddress.toString().replaceAll("/", ""), pseudo);
 			UDP_Sender.sendAnswer_RtoS(senderAddress);
-		}
-		else if (inPacket.getLength()==-1){
+		} else if (mesg.startsWith("01/")) {
+			System.out.println("Accusé de réception reçu");
+		} else if (mesg.startsWith("10/")) {
 			db_users_manager.removeUser(senderAddress.toString().replaceAll("/", "")); //need a removeUser class
-		}
+		};
 	}
 
 	public void run() {
