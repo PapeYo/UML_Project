@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.sql.SQLException;
 import Setup.Constants;
@@ -28,13 +29,18 @@ public class UDP_Receiver extends Thread {
 
 	private void receivePacket() throws IOException, SQLException {
 		byte[] buffer = new byte[256];
+		InetAddress localIP = NetworkInterface.getNetworkInterfaces().nextElement().getInterfaceAddresses().get(1).getAddress();
 		while(true) {
 			inPacket = new DatagramPacket(buffer,buffer.length);
 			System.out.println("inpacket created");
 			dgramSocket.receive(inPacket);
 			System.out.println("inpacket received");
-			System.out.println("Sender address : " + inPacket.getAddress());
-			analyzePacket(inPacket);
+			InetAddress senderAddress = inPacket.getAddress();
+			System.out.println("L'adresse locale est : " + localIP);
+			System.out.println("Sender address : " + senderAddress);
+			if (!senderAddress.equals(localIP)) {
+				analyzePacket(inPacket);
+			}
 		}
 	}
 
