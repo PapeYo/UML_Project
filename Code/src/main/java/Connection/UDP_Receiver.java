@@ -8,7 +8,10 @@ import java.net.SocketException;
 import java.sql.SQLException;
 
 import Network.NetworkReceiverManager;
+<<<<<<< HEAD
 import Network.NetworkSenderManager;
+=======
+>>>>>>> 9e7f340d983180d5a890383a68aeabf997cacf17
 import Setup.Constants;
 import database_management.db_users_manager;
 
@@ -46,12 +49,17 @@ public class UDP_Receiver extends Thread {
 		if (inPacket.getLength() > 0){
 			String pseudo = new String(inPacket.getData(),0,inPacket.getLength());
 			db_users_manager.updateUserTable(senderAddress.toString().replaceAll("/", ""), pseudo);
+<<<<<<< HEAD
 			UDP_Sender.sendAnswer_RtoS(senderAddress);
+=======
+			// sendAnswer_RtoS(senderAddress);
+>>>>>>> 9e7f340d983180d5a890383a68aeabf997cacf17
 		}
 		else if (inPacket.getLength()==-1){
 			db_users_manager.removeUser(senderAddress.toString().replaceAll("/", "")); //need a removeUser class
 		}
 	}
+<<<<<<< HEAD
 	
 	/*
 	 * public void receiveAnswer_RtoS() throws IOException { DatagramSocket
@@ -62,6 +70,8 @@ public class UDP_Receiver extends Thread {
 	 * String mesg = new String(inPacket.getData(),0,inPacket.getLength());
 	 * System.out.println(mesg); } }
 	 */
+=======
+>>>>>>> 9e7f340d983180d5a890383a68aeabf997cacf17
 
 	public void run() {
 		try {
