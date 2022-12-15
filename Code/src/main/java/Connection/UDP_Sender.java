@@ -56,10 +56,10 @@ public class UDP_Sender extends Thread{
 	}
 	
 	public static void sendAnswer_RtoS(InetAddress senderAddress) throws IOException {
-		DatagramSocket dgramSocket = new DatagramSocket(Constants.BROADCAST_PORT);
+		DatagramSocket dgramSocket = new DatagramSocket(Constants.UDP_PORT);
 		String mesg = "01/";
 		byte[] buffer = mesg.getBytes();
-		DatagramPacket answerPacket = new DatagramPacket(buffer, buffer.length, senderAddress, Constants.BROADCAST_PORT);
+		DatagramPacket answerPacket = new DatagramPacket(buffer, buffer.length, senderAddress, Constants.UDP_PORT);
 		dgramSocket.send(answerPacket);
 		System.out.println("Answer packet sent");
 		dgramSocket.close();
@@ -83,7 +83,6 @@ public class UDP_Sender extends Thread{
 			get_BcAddr();
 			create_UDP_Sender();
 			broadcast_pseudo();
-			// receiveAnswer_RtoS();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}

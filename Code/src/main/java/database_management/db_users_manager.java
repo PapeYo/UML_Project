@@ -70,6 +70,7 @@ public class db_users_manager extends db_manager {
 				pstmt.executeUpdate();
 				System.out.println(ipaddress + " has been updated and the new pseudo is " + pseudo);
 			}
+			selectALLusers();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -92,5 +93,6 @@ public class db_users_manager extends db_manager {
 		pstmt = connection.prepareStatement(sql);
 		pstmt.setString(1, ipuser);
 		pstmt.executeUpdate();
+		selectALLusers();
 	}
 }

@@ -38,8 +38,11 @@ public class UDP_Receiver extends Thread {
 			System.out.println("New message received");
 			InetAddress senderAddress = inPacket.getAddress();
 			System.out.println("Sender address is : " + senderAddress);
-			if (!senderAddress.equals(localIP)) {
+			if (!(senderAddress.equals(localIP))) {
+				System.out.println("Analyze in progress");
 				analyzePacket(inPacket);
+			} else {
+				db_users_manager.selectALLusers();
 			}
 		}
 	}
@@ -52,18 +55,14 @@ public class UDP_Receiver extends Thread {
 			// someone is broadcasting his/her pseudo
 			String pseudo = mesg.replaceAll("00/", "");
 			System.out.println("Pseudo : " + pseudo + ".");
-			System.out.println(pseudo.length());
 			db_users_manager.updateUserTable(senderAddress.toString().replaceAll("/", ""), pseudo);
 			UDP_Sender.sendAnswer_RtoS(senderAddress);
-			db_users_manager.selectALLusers();
 		} else if (mesg.startsWith("01/")) {
 			// someone has received my pseudo broadcast
 			System.out.println("Accusé de réception reçu");
-			db_users_manager.selectALLusers();
 		} else if (mesg.startsWith("10/")) {
 			// someone is disconnecting
 			db_users_manager.removeUser(senderAddress.toString().replaceAll("/", "")); //need a removeUser class
-			db_users_manager.selectALLusers();
 		}
 	}
 
