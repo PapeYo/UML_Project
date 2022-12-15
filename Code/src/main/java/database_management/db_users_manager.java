@@ -33,7 +33,7 @@ public class db_users_manager extends db_manager {
 			}
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			System.out.println("ipaddress \t\t pseudo");
+			System.out.println("ipaddress \t\tpseudo");
 			while (rs.next()) {
 				System.out.println(	rs.getString("ipaddress") + "\t\t" +
 						rs.getString("pseudo"));

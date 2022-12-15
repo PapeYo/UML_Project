@@ -39,8 +39,8 @@ public class UDP_Sender extends Thread{
 	
 	/* setup UDP with constructor */
 	public void create_UDP_Sender() throws SocketException {
-		dgramSocket = new DatagramSocket(Constants.BROADCAST_PORT);
-		System.out.println("datagram socket created");
+		dgramSocket = new DatagramSocket(Constants.UDP_PORT);
+		System.out.println("Datagram socket created and sending through port " + Constants.UDP_PORT);
 	}
 	 
 	public void broadcast_pseudo() throws IOException {
@@ -48,7 +48,7 @@ public class UDP_Sender extends Thread{
 		String mesg = "00/" + pseudo;
 		byte[] buf = mesg.getBytes();
 		DatagramPacket outPacket = new DatagramPacket(buf,buf.length,bc_addr, Constants.BROADCAST_PORT);
-		System.out.println("datagram outpacket created");
+		System.out.println("Pseudo packet created");
 		// send pseudo message
 		dgramSocket.send(outPacket);
 		System.out.println("Pseudo packet sent");
