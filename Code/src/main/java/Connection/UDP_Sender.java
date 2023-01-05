@@ -78,6 +78,20 @@ public class UDP_Sender extends Thread{
 		dgramSocket.close();
 	}
 	
+	public static void sendChangePseudoMessage(InetAddress senderAddress) throws IOException {
+		DatagramSocket dgramSocket = new DatagramSocket(Constants.UDP_PORT);
+		// create changePseudo Message
+		String mesg = "11/";
+		byte[] buffer = mesg.getBytes();
+		DatagramPacket outPacket = new DatagramPacket(buffer,buffer.length,senderAddress, Constants.UDP_PORT);
+		System.out.println("changePseudo datagram outpacket created");
+		// send changePseudo Message
+		dgramSocket.send(outPacket);
+		System.out.println("changePseudo Message sent. Closing UDP Socket");
+		//close dgramSocket
+		dgramSocket.close();
+	}
+	
 	public void run() {
 		try {
 			get_BcAddr();

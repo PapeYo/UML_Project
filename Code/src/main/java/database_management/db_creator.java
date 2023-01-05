@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class db_creator {
 	
 	private static Connection connection;
-	private static String db_url = "jdbc:sqlite:Database_folder/chat_app_db.db";
+	private static String db_url = "jdbc:sqlite:../Database_folder/chat_app_db.db";
 	
 	public static void createNewDatabase() {
         try {

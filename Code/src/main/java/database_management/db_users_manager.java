@@ -86,6 +86,19 @@ public class db_users_manager extends db_manager {
 		return rs.getString("pseudo");
 	}
 
+	public static boolean existingPseudo(String pseudo) throws SQLException {
+		String sql = "SELECT * FROM users WHERE pseudo=?";
+		PreparedStatement pstmt;
+		if (connection == null) connection = connect();
+		pstmt = connection.prepareStatement(sql);
+		pstmt.setString(1, pseudo);
+		ResultSet rs = pstmt.executeQuery();
+		if (rs.next()) {
+			return true;
+		}
+		return false;
+	}
+	
 	public static void removeUser(String ipuser) throws SQLException {
 		String sql = "DELETE FROM users WHERE ipaddress = ?";
 		PreparedStatement pstmt;

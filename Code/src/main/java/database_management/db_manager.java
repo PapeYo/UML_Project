@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class db_manager {
 	
-	private static String db_url = "jdbc:sqlite:Database_folder/chat_app_db.db";
+	private static String db_url = "jdbc:sqlite:../Database_folder/chat_app_db.db";
 	private static Connection connection;
 	
 	public static Connection connect() {
