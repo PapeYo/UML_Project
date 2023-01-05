@@ -53,13 +53,15 @@ public class UDP_Receiver extends Thread {
 		System.out.println(mesg);
 		if (mesg.startsWith("00/")){
 			// someone is broadcasting his/her pseudo
-			String pseudo = mesg.replaceAll("00/", "");
+			String pseudo = mesg.replaceFirst("00/", "");
 			System.out.println("Pseudo : " + pseudo + ".");
 			db_users_manager.updateUserTable(senderAddress.toString().replaceAll("/", ""), pseudo);
 			UDP_Sender.sendAnswer_RtoS(senderAddress);
 		} else if (mesg.startsWith("01/")) {
 			// someone has received my pseudo broadcast
 			System.out.println("Accusé de réception reçu");
+			String pseudo = mesg.replaceFirst("01/", "");
+			db_users_manager.updateUserTable(senderAddress.toString().replaceAll("/", ""), pseudo);
 		} else if (mesg.startsWith("10/")) {
 			// someone is disconnecting
 			db_users_manager.removeUser(senderAddress.toString().replaceAll("/", "")); //need a removeUser class
