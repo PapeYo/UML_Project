@@ -76,27 +76,27 @@ public class db_users_manager extends db_manager {
 		}
 	}
 
-	public static String selectUser(String localhostIP) throws SQLException {
+	public static String selectUser(String ipaddress) throws SQLException {
 		String sql = "SELECT pseudo FROM users WHERE ipaddress = ?";
 		PreparedStatement pstmt;
 		if (connection == null) connection = connect();
 		pstmt = connection.prepareStatement(sql);
-		pstmt.setString(1, localhostIP);
+		pstmt.setString(1, ipaddress);
 		ResultSet rs = pstmt.executeQuery();
 		return rs.getString("pseudo");
 	}
 
-	public static boolean existingPseudo(String pseudo) throws SQLException {
-		String sql = "SELECT * FROM users WHERE pseudo=?";
+	public static String existingPseudo(String pseudo) throws SQLException {
+		String sql = "SELECT ipaddress FROM users WHERE pseudo=?";
 		PreparedStatement pstmt;
 		if (connection == null) connection = connect();
 		pstmt = connection.prepareStatement(sql);
 		pstmt.setString(1, pseudo);
 		ResultSet rs = pstmt.executeQuery();
 		if (rs.next()) {
-			return true;
+			return rs.getString("ipaddress");
 		}
-		return false;
+		return null;
 	}
 	
 	public static void removeUser(String ipuser) throws SQLException {

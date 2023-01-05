@@ -55,7 +55,7 @@ public class UDP_Receiver extends Thread {
 			// someone is broadcasting his/her pseudo
 			String pseudo = mesg.replaceFirst("00/", "");
 			System.out.println("Pseudo : " + pseudo + ".");
-			if (db_users_manager.existingPseudo(pseudo)) {
+			if ((db_users_manager.existingPseudo(pseudo) == null) || !(db_users_manager.existingPseudo(pseudo).equals(senderAddress.toString()))) {
 				UDP_Sender.sendChangePseudoMessage(senderAddress);
 			}
 			else {
@@ -72,7 +72,7 @@ public class UDP_Receiver extends Thread {
 			db_users_manager.removeUser(senderAddress.toString().replaceAll("/", "")); //need a removeUser class
 		} else if (mesg.startsWith("11/")){
 			//InterfaceLogin.openWindow();
-			System.out.println("En vrai l‡ va falloir changer de pseudo gars");
+			System.out.println("En vrai l√† va falloir changer de pseudo gars");
 		}
 	}
 

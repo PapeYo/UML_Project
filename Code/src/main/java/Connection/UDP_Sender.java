@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.sql.SQLException;
 import java.util.Enumeration;
 import Setup.Constants;
 import database_management.db_users_manager;
@@ -15,7 +16,7 @@ public class UDP_Sender extends Thread{
 	
 	private String pseudo;
 	private InetAddress bc_addr;
-	private String localIP;
+	private static String localIP;
 	private DatagramSocket dgramSocket;
 	
 	public UDP_Sender(String pseudo) throws SocketException {
@@ -55,9 +56,9 @@ public class UDP_Sender extends Thread{
 		db_users_manager.updateUserTable(localIP, pseudo);
 	}
 	
-	public static void sendAnswer_RtoS(InetAddress senderAddress) throws IOException {
+	public static void sendAnswer_RtoS(InetAddress senderAddress) throws IOException, SQLException {
 		DatagramSocket dgramSocket = new DatagramSocket(Constants.UDP_PORT);
-		String mesg = "01/";
+		String mesg = "01/" + db_users_manager.selectUser(localIP);
 		byte[] buffer = mesg.getBytes();
 		DatagramPacket answerPacket = new DatagramPacket(buffer, buffer.length, senderAddress, Constants.UDP_PORT);
 		dgramSocket.send(answerPacket);
