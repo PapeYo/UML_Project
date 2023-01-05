@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.Timestamp;
 
 import Setup.Constants;
@@ -22,7 +23,8 @@ public class TCP_Receiver extends Thread {
 	BufferedReader in;
 	Socket link = null;
 	
-	public TCP_Receiver() {
+	public TCP_Receiver() throws SocketException {
+		this.ipreceiver = Constants.get_LocalIP();
 		start();
 	}
 	
@@ -46,7 +48,6 @@ public class TCP_Receiver extends Thread {
 	
 	public void getMessageInfo() throws IOException {
 		message = in.readLine();
-		ipreceiver = Constants.get_LocalIP();
 		ippartner = link.getInetAddress().getHostAddress();
 		ipsender = ippartner;
 		timestamp = new Timestamp(System.currentTimeMillis());

@@ -17,8 +17,10 @@ public class UDP_Receiver extends Thread {
 	InetAddress senderAddress;
 	int senderPort;
 	String pseudo;
+	String localIP;
 
-	public UDP_Receiver() {
+	public UDP_Receiver() throws SocketException {
+		this.localIP = Constants.get_LocalIP();
 		start();
 	}	
 
@@ -29,7 +31,7 @@ public class UDP_Receiver extends Thread {
 
 	private void receivePacket() throws IOException, SQLException {
 		byte[] buffer = new byte[256];
-		System.out.println("Local address is : " + Constants.get_LocalIP());
+		System.out.println("Local address is : " + localIP);
 		while(true) {
 			inPacket = new DatagramPacket(buffer,buffer.length);
 			System.out.println("Waiting for message");
@@ -37,7 +39,7 @@ public class UDP_Receiver extends Thread {
 			System.out.println("New message received");
 			InetAddress senderAddress = inPacket.getAddress();
 			System.out.println("Sender address is : " + senderAddress);
-			if (!(senderAddress.equals(Constants.get_LocalIP()))) {
+			if (!(senderAddress.equals(localIP))) {
 				System.out.println("Analyze in progress");
 				analyzePacket(inPacket);
 			} else {

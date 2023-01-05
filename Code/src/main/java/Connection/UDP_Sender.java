@@ -13,9 +13,13 @@ public class UDP_Sender extends Thread{
 	
 	private String pseudo;
 	private DatagramSocket dgramSocket;
+	static String localIP;
+	InetAddress bcIP;
 	
 	public UDP_Sender(String pseudo) throws SocketException {
 		this.pseudo = pseudo;
+		UDP_Sender.localIP = Constants.get_LocalIP();
+		this.bcIP = Constants.get_BcIP();
 		start();
 	}
 	
@@ -29,17 +33,17 @@ public class UDP_Sender extends Thread{
 		// create pseudo message
 		String mesg = "00/" + pseudo;
 		byte[] buf = mesg.getBytes();
-		DatagramPacket outPacket = new DatagramPacket(buf,buf.length,Constants.get_BcIP(), Constants.UDP_RECEIVER_PORT);
+		DatagramPacket outPacket = new DatagramPacket(buf,buf.length,bcIP, Constants.UDP_RECEIVER_PORT);
 		System.out.println("Pseudo packet created");
 		// send pseudo message
 		dgramSocket.send(outPacket);
 		System.out.println("Pseudo packet sent");
-		db_users_manager.updateUserTable(Constants.get_LocalIP(), pseudo);
+		db_users_manager.updateUserTable(localIP, pseudo);
 	}
 	
 	public static void sendAnswer_RtoS(InetAddress senderAddress) throws IOException, SQLException {
 		DatagramSocket dgramSocket = new DatagramSocket(Constants.UDP_SENDER_PORT);
-		String mesg = "01/" + db_users_manager.selectUser(Constants.get_LocalIP().replaceAll("/",""));
+		String mesg = "01/" + db_users_manager.selectUser(localIP.replaceAll("/",""));
 		byte[] buffer = mesg.getBytes();
 		DatagramPacket answerPacket = new DatagramPacket(buffer, buffer.length, senderAddress, Constants.UDP_RECEIVER_PORT);
 		dgramSocket.send(answerPacket);
@@ -51,7 +55,7 @@ public class UDP_Sender extends Thread{
 		// create disconnect message
 		String mesg = "10/";
 		byte[] buffer = mesg.getBytes();
-		DatagramPacket outPacket = new DatagramPacket(buffer,buffer.length,Constants.get_BcIP(), Constants.UDP_RECEIVER_PORT);
+		DatagramPacket outPacket = new DatagramPacket(buffer,buffer.length,bcIP, Constants.UDP_RECEIVER_PORT);
 		System.out.println("Disconnection datagram outpacket created");
 		// send disconnect message
 		dgramSocket.send(outPacket);
