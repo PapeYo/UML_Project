@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.sql.SQLException;
+
 import Setup.Constants;
 import database_management.db_users_manager;
 
@@ -20,7 +20,7 @@ public class UDP_Receiver extends Thread {
 
 	public UDP_Receiver() {
 		start();
-	}
+	}	
 
 	public void createUDP_Receiver(int portNumber) throws SocketException {
 		dgramSocket = new DatagramSocket(portNumber);
@@ -29,8 +29,7 @@ public class UDP_Receiver extends Thread {
 
 	private void receivePacket() throws IOException, SQLException {
 		byte[] buffer = new byte[256];
-		InetAddress localIP = NetworkInterface.getNetworkInterfaces().nextElement().getInterfaceAddresses().get(1).getAddress();
-		System.out.println("Local address is : " + localIP);
+		System.out.println("Local address is : " + Constants.get_LocalIP());
 		while(true) {
 			inPacket = new DatagramPacket(buffer,buffer.length);
 			System.out.println("Waiting for message");
@@ -38,7 +37,7 @@ public class UDP_Receiver extends Thread {
 			System.out.println("New message received");
 			InetAddress senderAddress = inPacket.getAddress();
 			System.out.println("Sender address is : " + senderAddress);
-			if (!(senderAddress.equals(localIP))) {
+			if (!(senderAddress.equals(Constants.get_LocalIP()))) {
 				System.out.println("Analyze in progress");
 				analyzePacket(inPacket);
 			} else {

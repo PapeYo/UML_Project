@@ -2,54 +2,46 @@ package Conversation;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.SocketException;
 import java.sql.Timestamp;
-import java.time.LocalTime;
 
+import Setup.Constants;
 import database_management.db_conv_manager;
 
-public class TCP_Sender {
+public class TCP_Sender extends Thread {
 	
-	final static String serverHost = "localhost";
-	static Socket link;
-	static PrintWriter out = null;
+	Socket link;
+	PrintWriter out = null;
 	
-	// 
-	static String message;
-	static String ippartner;
-	static String ipsender;
-	static String ipreceiver;
-	static Timestamp timestamp;
+	String message;
+	String ippartner;
+	String ipsender;
+	String ipreceiver;
+	Timestamp timestamp;
 	
-	public static void getMessageInfo() throws IOException {
-		// message = read from JFieldText
-		ippartner = link.getInetAddress().getHostAddress();
-		ipsender = getIPlocalhost();
-		ipreceiver = ippartner;
-		message = "il est " + LocalTime.now();
-		timestamp = new Timestamp(System.currentTimeMillis());
+	public TCP_Sender(String partnerAddress, String message) throws SocketException {
+		this.ippartner = partnerAddress;
+		this.ipsender = Constants.get_LocalIP();
+		this.ipreceiver = this.ippartner;
+		this.message = message;
+		this.timestamp = new Timestamp(System.currentTimeMillis());
+		start();
 	}
 	
-	public static String getIPlocalhost() throws UnknownHostException {
-		return InetAddress.getLocalHost().getHostAddress();
-	}
-	
-	public static void addToDb() {
+	public void addToDb() {
 		// add message to database
-		db_conv_manager.insertMessage(ippartner, ipsender, ipreceiver, "Sender : " + message, timestamp);
+		db_conv_manager.insertMessage(ippartner, ipsender, ipreceiver, message, timestamp);
 		// display message history
 		db_conv_manager.selectALLmessages();
 		db_conv_manager.disconnect();
 	}
 	
-	public static void main(String args[]) throws UnknownHostException {		
+	public void run() {		
 		try {
-			link = new Socket("10.32.47.251", 7777);
+			link = new Socket(ippartner, Constants.TCP_RECEIVER_PORT);
 			System.out.println(link);
 			out = new PrintWriter(link.getOutputStream(),true);
-			getMessageInfo();
 			addToDb();
 			out.println(message);
 			out.close();

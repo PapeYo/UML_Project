@@ -4,38 +4,19 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.InterfaceAddress;
-import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.sql.SQLException;
-import java.util.Enumeration;
 import Setup.Constants;
 import database_management.db_users_manager;
 
 public class UDP_Sender extends Thread{
 	
 	private String pseudo;
-	private static InetAddress bc_addr;
-	private static String localIP;
 	private DatagramSocket dgramSocket;
 	
 	public UDP_Sender(String pseudo) throws SocketException {
 		this.pseudo = pseudo;
 		start();
-	}
-	
-	public static void get_BcAddr() throws SocketException {
-		Enumeration<NetworkInterface> networkInterfaceEnumeration = NetworkInterface.getNetworkInterfaces();
-		while(networkInterfaceEnumeration.hasMoreElements()) {
-			for(InterfaceAddress interfaceAddress : networkInterfaceEnumeration.nextElement().getInterfaceAddresses()) {
-				if(interfaceAddress.getAddress().isSiteLocalAddress()) {
-					localIP = interfaceAddress.getAddress().getHostAddress();
-					bc_addr = interfaceAddress.getBroadcast();
-					System.out.println("Local IP : " + localIP);
-					System.out.println("Broadcast address : " + bc_addr);
-				}
-			}
-		}
 	}
 	
 	/* setup UDP with constructor */
@@ -48,18 +29,17 @@ public class UDP_Sender extends Thread{
 		// create pseudo message
 		String mesg = "00/" + pseudo;
 		byte[] buf = mesg.getBytes();
-		DatagramPacket outPacket = new DatagramPacket(buf,buf.length,bc_addr, Constants.UDP_RECEIVER_PORT);
+		DatagramPacket outPacket = new DatagramPacket(buf,buf.length,Constants.get_BcIP(), Constants.UDP_RECEIVER_PORT);
 		System.out.println("Pseudo packet created");
 		// send pseudo message
 		dgramSocket.send(outPacket);
 		System.out.println("Pseudo packet sent");
-		db_users_manager.updateUserTable(localIP, pseudo);
+		db_users_manager.updateUserTable(Constants.get_LocalIP(), pseudo);
 	}
 	
 	public static void sendAnswer_RtoS(InetAddress senderAddress) throws IOException, SQLException {
-		get_BcAddr();
 		DatagramSocket dgramSocket = new DatagramSocket(Constants.UDP_SENDER_PORT);
-		String mesg = "01/" + db_users_manager.selectUser(localIP.toString().replaceAll("/",""));
+		String mesg = "01/" + db_users_manager.selectUser(Constants.get_LocalIP().replaceAll("/",""));
 		byte[] buffer = mesg.getBytes();
 		DatagramPacket answerPacket = new DatagramPacket(buffer, buffer.length, senderAddress, Constants.UDP_RECEIVER_PORT);
 		dgramSocket.send(answerPacket);
@@ -71,7 +51,7 @@ public class UDP_Sender extends Thread{
 		// create disconnect message
 		String mesg = "10/";
 		byte[] buffer = mesg.getBytes();
-		DatagramPacket outPacket = new DatagramPacket(buffer,buffer.length,bc_addr, Constants.UDP_RECEIVER_PORT);
+		DatagramPacket outPacket = new DatagramPacket(buffer,buffer.length,Constants.get_BcIP(), Constants.UDP_RECEIVER_PORT);
 		System.out.println("Disconnection datagram outpacket created");
 		// send disconnect message
 		dgramSocket.send(outPacket);
@@ -96,7 +76,6 @@ public class UDP_Sender extends Thread{
 	
 	public void run() {
 		try {
-			get_BcAddr();
 			create_UDP_Sender();
 			broadcast_pseudo();
 		} catch (IOException e) {

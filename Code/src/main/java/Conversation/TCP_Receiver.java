@@ -4,25 +4,29 @@ package Conversation;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.sql.Timestamp;
+
+import Setup.Constants;
 import database_management.db_conv_manager;
 
-public class TCP_Receiver {
+public class TCP_Receiver extends Thread {
 
-	static String ippartner;
-	static String ipsender;
-	static String ipreceiver;
-	static Timestamp timestamp;
-	static ServerSocket servSocket;
-	static String message;
-	static BufferedReader in;
-	static Socket link = null;
+	String ippartner;
+	String ipsender;
+	String ipreceiver;
+	Timestamp timestamp;
+	ServerSocket servSocket;
+	String message;
+	BufferedReader in;
+	Socket link = null;
 	
-	public static void connectPort(int portnumber) {
+	public TCP_Receiver() {
+		start();
+	}
+	
+	public void connectPort(int portnumber) {
 		try {
 			servSocket = new ServerSocket(portnumber);
 		} catch (IOException e) {
@@ -30,48 +34,46 @@ public class TCP_Receiver {
 		}
 	}
 	
-	public static String getIPlocalhost() throws UnknownHostException {
-		return InetAddress.getLocalHost().getHostAddress();
+	private void receivePacket() throws IOException {
+		link = servSocket.accept();
+		System.out.println("Accepted");
+		// create message reader
+		in = new BufferedReader(new InputStreamReader(link.getInputStream()));
+		// read the conversation communication
+		getMessageInfo();
+		System.out.println("Message recu = " + message);
 	}
 	
-	public static void getMessageInfo() throws IOException {
+	public void getMessageInfo() throws IOException {
 		message = in.readLine();
-		ipreceiver = getIPlocalhost();
+		ipreceiver = Constants.get_LocalIP();
 		ippartner = link.getInetAddress().getHostAddress();
 		ipsender = ippartner;
 		timestamp = new Timestamp(System.currentTimeMillis());
 	}
 
-	public static void addToDb() {
+	public void addToDb() {
 		// add message to database
-		db_conv_manager.insertMessage(ippartner, ipsender, ipreceiver, "Receiver : " + message, timestamp);
+		db_conv_manager.insertMessage(ippartner, ipsender, ipreceiver, message, timestamp);
 		// display message history
 		db_conv_manager.selectALLmessages();
 		db_conv_manager.disconnect();
 	}
-
-	public static void main(String args[]) {
+	
+	public void run() {
 		try {
-			// connection to database
-			db_conv_manager.connect();
-			
-			// listens on port number 7777
-			connectPort(7777);
-			System.out.println("Connected to port number 7777");
+		// connection to database
+		db_conv_manager.connect();
+		// listens on port number 3000
+		connectPort(Constants.TCP_RECEIVER_PORT);
+		while(true) {
+			System.out.println("Connected to port number " + Constants.TCP_RECEIVER_PORT);
 			System.out.println("Waiting to accept");
-			link = servSocket.accept();
-			System.out.println("Accepted");
-			// create message reader
-			in = new BufferedReader(new InputStreamReader(link.getInputStream()));
-			
-			// read the conversation communication
-			getMessageInfo();
-			System.out.println("Message recu = " + message);
-			
+			receivePacket();
 			addToDb();
-			
+		}
 		} catch (IOException e) {
-			System.out.println(e);
+			System.out.println(e.getMessage());
 		}
 	}
 }
