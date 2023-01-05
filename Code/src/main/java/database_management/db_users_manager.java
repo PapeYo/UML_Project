@@ -96,7 +96,7 @@ public class db_users_manager extends db_manager {
 		if (rs.next()) {
 			return rs.getString("ipaddress");
 		}
-		return null;
+		else return "0.0.0.0";
 	}
 	
 	public static void removeUser(String ipuser) throws SQLException {

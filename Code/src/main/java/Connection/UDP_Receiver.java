@@ -55,7 +55,7 @@ public class UDP_Receiver extends Thread {
 			// someone is broadcasting his/her pseudo
 			String pseudo = mesg.replaceFirst("00/", "");
 			System.out.println("Pseudo : " + pseudo + ".");
-			if ((db_users_manager.existingPseudo(pseudo) == null) || !(db_users_manager.existingPseudo(pseudo).equals(senderAddress.toString()))) {
+			if (!((db_users_manager.existingPseudo(pseudo).equals(senderAddress.toString().replaceAll("/",""))) || (db_users_manager.existingPseudo(pseudo).equals("0.0.0.0")))){
 				UDP_Sender.sendChangePseudoMessage(senderAddress);
 			}
 			else {
@@ -78,7 +78,7 @@ public class UDP_Receiver extends Thread {
 
 	public void run() {
 		try {
-			createUDP_Receiver(Constants.BROADCAST_PORT);
+			createUDP_Receiver(Constants.UDP_RECEIVER_PORT);
 			receivePacket();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());

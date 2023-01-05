@@ -10,7 +10,7 @@ import java.time.LocalTime;
 
 import database_management.db_conv_manager;
 
-public class MessageSender {
+public class TCP_Sender {
 	
 	final static String serverHost = "localhost";
 	static Socket link;

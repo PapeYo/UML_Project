@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import database_management.db_conv_manager;
 
-public class MessageReceiver {
+public class TCP_Receiver {
 
 	static String ippartner;
 	static String ipsender;
