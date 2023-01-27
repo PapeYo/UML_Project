@@ -1,4 +1,7 @@
 # UML_Project
-Application de messagerie instantanée
 
-Création de la base de données : C://Chat_App/
+Consignes pour déployer l'application (à faire sur chanque machine) :
+Dans un terminal : *git clone https://github.com/PapeYo/UML_Project*
+Ouvrir Eclipse
+Ouvrir le dossier *chat_app* téléchrgé
+Run *App.java*
