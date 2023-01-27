@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.insa.chat_app.ConvTabController">
+   <children>
+      <HBox alignment="CENTER_RIGHT">
+         <children>
+            <Label fx:id="pseudoReceiverLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="22.0" prefWidth="300.0" style="-fx-background-color: #ECF8F6;" text="Label" textFill="#18534f">
+               <padding>
+                  <Insets right="150.0" />
+               </padding>
+            </Label>
+            <Button fx:id="reduceConvButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#reduceConv" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #18534F;" text="Close" textFill="#d6955b" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+      <ScrollPane fx:id="messageScrollPane">
+         <content>
+            <VBox fx:id="messageAreaVBox" prefHeight="460.0" prefWidth="400.0" spacing="10.0" style="-fx-background-color: #FEEAA1;" />
+         </content>
+      </ScrollPane>
+      <HBox alignment="CENTER_RIGHT">
+         <children>
+            <Button fx:id="fileSendButton" mnemonicParsing="false" onAction="#fileSend" prefHeight="20.0" prefWidth="70.0" style="-fx-background-color: #18534F;" text="File" textFill="#d6955b" />
+            <TextField fx:id="messageTextField" accessibleRole="TEXT_AREA" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="300.0" promptText="Write message here" style="-fx-background-color: #ECF8F6;" />
+            <Button fx:id="sendMessageButton" mnemonicParsing="false" onAction="#sendMessage" prefHeight="20.0" prefWidth="50.0" style="-fx-background-color: #18534F;" text="Send" textFill="#d6955b" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

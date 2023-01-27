@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #18534F;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.insa.chat_app.LoginPaneController">
+   <children>
+      <Label text="Choose your pseudo" textAlignment="CENTER" textFill="#ecf8f6">
+         <font>
+            <Font name="Verdana Bold" size="24.0" />
+         </font></Label>
+      <TextField fx:id="pseudoField" alignment="CENTER" prefWidth="250.0" promptText="Choose a pseudo" style="-fx-background-color: #FEEAA1;">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></TextField>
+      <Button fx:id="loginButton" graphicTextGap="10.0" mnemonicParsing="false" onAction="#login" style="-fx-background-color: #226D68;" text="Login" textFill="#d6955b" />
+      <Label fx:id="comment" />
+   </children>
+   <padding>
+      <Insets left="50.0" right="50.0" top="10.0" />
+   </padding>
+</VBox>
